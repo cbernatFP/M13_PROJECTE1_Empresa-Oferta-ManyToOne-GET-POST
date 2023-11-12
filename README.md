@@ -22,7 +22,7 @@ Podríem tenir els comentaris coma una llista dins el tutorial, però si un tuto
 Aquí sí que ens pot interessar consultar les ofertes d’una empresa, però també consultar ofertes en general per altres criteris…
 
 
-## Exemple 1
+## Exemple 1. VEURE CODI PROJECTE
 ## @ManyToOne. A la classe fill ens guardem qui és el pare
 https://www.bezkoder.com/jpa-one-to-many/
 
@@ -68,7 +68,7 @@ public class Comment {
 }
 ```
 
-## Exemple 12
+## Exemple 2. NO HI HA EL CODI
 ## @OneToMany. A la classe pare ens guardem la llista de fills
 A la classe fill no guardarem res.
 A la classe pare:
