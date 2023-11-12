@@ -1,72 +1,68 @@
-# M13_PROJECTE1
+# Exemples JPA 1:N
 
-## Exemple Bàsic REST API. JPA CRUD. Empresa
-### Què farem
-La nostra aplicació tindrà bàsicament les següents classes:
-- ProjecteDamDawApplication.java. Defineix l’aplicació SpringBoot...
-- Empresa.java. JPAEntity. L’objecte/entitat que consultem. I que voldrem fer “persistent”.
-- EmpresaRepository.java. Extendrà CRUDRepository o JPARepository. Defineix els mètodes d’accés a la base de dades (o a la capa de persistència).
-   - els mètodes add, borrar, modifica que vam fer amb l’ArrayList ja estarien implementats a CRUDRepository. Que a més, no els inserta, llegeix o esborra d’una llista, sinó d’una BD. No els haurem de crear. Els podem fer servir directament.
-   - JPA és un ORM. Mapeja estructures d’una BD relacional a objectes Java.
-   - En aquest cas només farem el llistat de llibres findAll
-- EmpresaController.java. Exposa els mètodes que permeten connectar-se a l’aplicació a través de crides http. 
+## Exemples de relacions 1:N
 
-# ATENCIÓ
-Aquest és un codi bàsic. No hi ha el més mínim control d'errors ni gestió d'excepcions
+- El carro de la compra i els ítems comprats
+- El tutorial i els seus comentaris.
+- Una empres i les seves ofertes de feina.
 
+Conceptualment a nivell de disseny de base de dades relacional, l’esquema és el mateix. Una relació 1:N. En el fill ens guardarem la clau forana del pare.
 
+Però quan treballem amb objectes hem de pensar què és el més eficient.
 
-Veure Tutorial en pdf: [Mini_Ap_Spring_Boot_REST_API.pdf](Mini_Ap_Spring_Boot_REST_API.pdf)
+Diferents casuístiques: 
 
+### El carro de la compra i els ítems comprats
+Té sentit tenir els ítems com una llista dins el carro. En principi mai consultarem un ítem fora del seu carro. Consultarem els items d’un carro.
 
-# Index
-- Què farem	
-- Introducció REST	
-- Generar el projecte Spring Boot	
-- Crear la classe Empresa	
-- Crear la classe Repository	
-- Crear el Controller	
-- Provar l’Api	
-- Provar l’Api amb POSTMAN	
-   - Ampliacions de la pràctica
-   - Ús de la classe Optional de Java 8	
-   - Control d’excepcions	
-- Documentació de la RESTApi amb SWAGGER	
-- Maven
+### El tutorial i els seus comentaris.
+Podríem tenir els comentaris coma una llista dins el tutorial, però si un tutorial té 10.000 comentaris se’ns complica la cosa. Tot i que en principi no consultarem comentaris fora del tutorial corresponent. Consultarem els comentaris d’un tutorial.
+
+### Una empres i les seves ofertes de feina.
+Aquí sí que ens pot interessar consultar les ofertes d’una empresa, però també consultar ofertes en general per altres criteris…
 
 
 
-# Introducció REST
-REST: (Representational State Transfer) és un estil d’arquitectura per dissenyar serveis web: 
-- els programes interactuen amb crides HTTP senzilles
-- no manté l’estat
-- exposa les URI’s en estructura de directoris
-- transfereix XML o JSON
+## @ManyToOne. A la classe fill ens guardem qui és el pare
+https://www.bezkoder.com/jpa-one-to-many/
 
-Les crides http:
-- Per crear un recurs: farem servir un HTTP POST 
-- Per consultar un recurs (o una col.lecció): farem servir un HTTP GET 
-- Per actualitzar un recurs: farem servir un HTTP PUT
-- Per eliminar un recurs: farem servir un HTTP DELETE 
+A la classe pare no guardem res.
+@Entity
+@Table(name = "tutorials")
+public class Tutorial {
 
-Recordeu  que HTTP també defineix respostes estàndar
-- 200 - SUCCESS
-- 404 - RESOURCE NOT FOUND
-- 400 - BAD REQUEST
-- 201 - CREATED
-- 401 - UNAUTHORIZED
-- 415 - UNSUPPORTED TYPE - Representation not supported for the resource
-- 500 - SERVER ERROR
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tutorial_generator")
+  private long id;
 
-El concepte clau d’un servei REST son els recursos exposats o endpoints. Un llibre, un usuari de facebook, una adreça de googleMaps, una event en un Calendari de Google… 
+  @Column(name = "title")
+  private String title;
 
-Aquest recursos son accessibles a través de URIs més o menys ben definides.
-```
-insert POST  /calendars/calendarId/events Creates an event. 
-get GET  /calendars/calendarId/events/eventId Returns an event. 
-```
+  @Column(name = "description")
+  private String description;
+
+  @Column(name = "published")
+  private boolean published;
 
 
-### Perquè JSON
-Aquesta és una de les decisions que pren SpringBoot (recordem que és un framework “convention over configuration”). Com que el més habitual és JSON, si no li diem el contrari inclou les dependències necessàries per treballar amb JSON. Si volem treballar amb XML només haurem d’afegir les dependències necessàries.
-Qualsevol @RestController d’una aplicació SpringBoot per defecte retorna respostes JSON. (Si la llibreria Jackson2 està al classpath). I en una aplicació SpringBoot Web [spring-boot-starter-web] s’inclou automàticament
+A la classe fill ens guardem qui és el pare
+
+@Entity
+@Table(name = "comments")
+public class Comment {
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comment_generator")
+  private Long id;
+
+  @Lob
+  private String content;
+
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "tutorial_id", nullable = false)
+  @OnDelete(action = OnDeleteAction.CASCADE)
+  @JsonIgnore
+  private Tutorial tutorial;
+
+  // getters and setters
+}
+
