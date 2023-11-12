@@ -67,3 +67,33 @@ public class Comment {
   // getters and setters
 }
 ```
+
+## Exemple 12
+## @OneToMany. A la classe pare ens guardem la llista de fills
+A la classe fill no guardarem res.
+A la classe pare:
+```java
+@Entity
+@Table(name = "tutorials")
+public class Tutorial {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
+
+  @Column(name = "title")
+  private String title;
+
+  @Column(name = "description")
+  private String description;
+
+  @Column(name = "published")
+  private boolean published;
+
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+  @JoinColumn(name = "tutorial_id")
+  private Set<Comment> comments = new HashSet<>();
+```
+
+
+
