@@ -27,6 +27,7 @@ Aquí sí que ens pot interessar consultar les ofertes d’una empresa, però ta
 https://www.bezkoder.com/jpa-one-to-many/
 
 A la classe pare no guardem res.
+```
 @Entity
 @Table(name = "tutorials")
 public class Tutorial {
@@ -43,10 +44,10 @@ public class Tutorial {
 
   @Column(name = "published")
   private boolean published;
-
+```
 
 A la classe fill ens guardem qui és el pare
-
+```
 @Entity
 @Table(name = "comments")
 public class Comment {
@@ -65,4 +66,4 @@ public class Comment {
 
   // getters and setters
 }
-
+```
