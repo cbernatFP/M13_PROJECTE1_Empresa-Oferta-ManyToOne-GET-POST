@@ -22,12 +22,12 @@ Podríem tenir els comentaris coma una llista dins el tutorial, però si un tuto
 Aquí sí que ens pot interessar consultar les ofertes d’una empresa, però també consultar ofertes en general per altres criteris…
 
 
-
+## Exemple 1
 ## @ManyToOne. A la classe fill ens guardem qui és el pare
 https://www.bezkoder.com/jpa-one-to-many/
 
 A la classe pare no guardem res.
-```
+```java
 @Entity
 @Table(name = "tutorials")
 public class Tutorial {
@@ -47,7 +47,7 @@ public class Tutorial {
 ```
 
 A la classe fill ens guardem qui és el pare
-```
+```java
 @Entity
 @Table(name = "comments")
 public class Comment {
