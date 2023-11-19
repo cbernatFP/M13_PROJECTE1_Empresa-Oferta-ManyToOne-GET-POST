@@ -59,6 +59,13 @@ public class Controller {
 
 		return new ResponseEntity<>(oferta, HttpStatus.CREATED);
 	}
+	
+	// --------------------------------------------------------------------	
+	// TODO: FALTA FER LA RESTA DE MÈTODES
+	// --------------------------------------------------------------------
+	
+	
+	
 
 	// Gestió EMPRESES
 	// --------------------------------------------------------------------
@@ -86,5 +93,12 @@ public class Controller {
 	public void esborra(@PathVariable long id) {
 		empresaRepository.deleteById(id);
 	}
+
+	// --------------------------------------------------------------------
+	// TODO: FALTA FER LA RESTA DE MÈTODES
+	// --------------------------------------------------------------------	
+	// TODO: FALTA FER GESTIÓ D'ERRORS I EXCEPCIONS
+	// --------------------------------------------------------------------
+	
 
 }
