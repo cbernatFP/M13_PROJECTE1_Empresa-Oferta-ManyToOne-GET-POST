@@ -71,4 +71,10 @@ public class Oferta {
 		this.jornada = jornada;
 	}
 
+	@Override
+	public String toString() {
+		return "Oferta [id_oferta=" + id_oferta + ", empresa=" + empresa + ", lloc=" + lloc + ", jornada=" + jornada
+				+ "]";
+	}
+
 }

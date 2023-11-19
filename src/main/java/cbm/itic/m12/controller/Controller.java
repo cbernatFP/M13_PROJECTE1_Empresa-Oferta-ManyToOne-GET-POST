@@ -65,6 +65,7 @@ public class Controller {
 
 	@GetMapping("/empresa")
 	public Iterable<Empresa> buscaTots() {
+		System.out.println("1111111111");
 		return empresaRepository.findAll();
 	}
 

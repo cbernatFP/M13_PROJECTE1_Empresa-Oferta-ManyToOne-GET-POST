@@ -26,16 +26,16 @@ public class Empresa {
 	// A PARTIR D'AQUÍ CODI GENERAT DES DEL MENÚ "Source":
 	// Els 2 constructors i els getters i setters
 
-	public Empresa() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public Empresa(long id_empresa, String nom, String cif, Set<Oferta> ofertes) {
+	public Empresa(long id_empresa, String nom, String cif) {
 		super();
 		this.id = id_empresa;
 		this.nom = nom;
 		this.cif = cif;
+	}
+
+	public Empresa() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public long getId_empresa() {
